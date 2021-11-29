@@ -1,3 +1,6 @@
+// **must specify collection when importing this and creating const in component**
+
+
 import { useEffect, useState, useRef } from "react"
 import { projectFirestore } from "../firebase/config"
 

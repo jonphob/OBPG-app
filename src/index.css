@@ -4,7 +4,7 @@
 :root {
   --heading-color: #444;
   --text-color: #999;
-  --primary-color: #8d69f1;
+  --primary-color: #4CAA3C;
   --highlight-color: #d13267;
   --bg-color: #f4f4f4;
 }
@@ -64,6 +64,14 @@ input, textarea {
 }
 textarea {
   min-height: 160px;
+}
+input[type="date" i] {
+    align-items: center;
+    font-family: Poppins, sans-serif;
+    padding-inline-start: 1px;
+    cursor:text;
+    overflow: hidden;
+    padding: 6px;
 }
 .error {
   color: red;
