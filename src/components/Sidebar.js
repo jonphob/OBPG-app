@@ -44,6 +44,12 @@ export default function Sidebar() {
                   <span>Add Rx Figures</span>
                 </NavLink>
               </li>
+              <li>
+                <NavLink to="/addServiceFigures">
+                  <img src={AddIcon} alt="add project icon" />
+                  <span>Add Service Figures</span>
+                </NavLink>
+              </li>
             </ul>
           </nav>
         </div>

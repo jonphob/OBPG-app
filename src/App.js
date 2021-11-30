@@ -13,6 +13,7 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import OnlineUsers from './components/OnlineUsers';
 import AddRxFigures from './pages/addRxFigures/AddRxFigures';
+import AddServiceFigures from './pages/addServiceFigures/AddServiceFigures';
 
 function App() {
 
@@ -55,7 +56,15 @@ const { user, authIsReady } = useAuthContext()
               <Route
                 path="/addRxFigures"
                 element={
-                  (user && <AddRxFigures />) || (!user && <Navigate to="/login" />)
+                  (user && <AddRxFigures />) ||
+                  (!user && <Navigate to="/login" />)
+                }
+              ></Route>
+              <Route
+                path="/addServiceFigures"
+                element={
+                  (user && <AddServiceFigures />) ||
+                  (!user && <Navigate to="/login" />)
                 }
               ></Route>
             </Routes>

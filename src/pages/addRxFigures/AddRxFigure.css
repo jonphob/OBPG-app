@@ -1,0 +1,55 @@
+.add-figures-form {
+  max-width: 100%;
+  
+}
+
+.rx-container {
+    margin-top: 30px;
+    display: flex;
+    /* grid-template-columns: 1fr 1fr 1fr;
+    gap:30px; */
+}
+
+.rx-container span{
+    font-size: 13px;
+}
+
+.add-figures-form h2{
+    margin-bottom: 2rem;
+}
+fieldset {
+    border-width: 2px;
+    border-style:solid;
+}
+.input-container {
+    gap:20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+legend {
+    background-color:var(--primary-color);
+    color: #fff;
+    padding: 3px 30px;
+    border-radius: 5px;
+    width:130px;
+    font-size: 1.3rem;
+}
+
+.fp10mda {
+    background-color: rgb(64, 180, 196);
+}
+
+.token {
+    background-color: rgb(255, 255, 255);
+    color: rgb(109, 105, 105);
+}
+
+.add-figures-form fieldset{
+    border-radius: 5px;
+    margin-bottom: 30px;
+}  
+
+.submit-figures-btn {
+    margin-left: 3px;
+}

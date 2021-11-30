@@ -68,15 +68,15 @@ export default function Create() {
         }
     })
     // create doc and save to firestore here if 
-    const project = {
-      name: name, //can be shortened to just name
-      details: details,
-      category: category.value,
-      dueDate: timestamp.fromDate(new Date(dueDate)), //creates new timestamp from date given to fn
-      comments: [],
-      createdBy: createdBy,
-      assignedUsersList: assignedUsersList
-    };
+    // const project = {
+    //   name: name, //can be shortened to just name
+    //   details: details,
+    //   category: category.value,
+    //   dueDate: timestamp.fromDate(new Date(dueDate)), //creates new timestamp from date given to fn
+    //   comments: [],
+    //   createdBy: createdBy,
+    //   assignedUsersList: assignedUsersList
+    // };
     console.log(name, details, dueDate, category.value, assignedUsers);
   };
 
