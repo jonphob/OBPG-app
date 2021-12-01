@@ -51,8 +51,9 @@ legend {
 }  
 
 #dateInput {
-    width:456px;
-    height:40px
+    width:200px;
+    height:40px;
+    border-radius: 5px;
 }
 
 .submit-figures-btn {
@@ -63,6 +64,8 @@ legend {
     padding-top: 8px;
     width: -moz-fit-content;
     width: fit-content;
+    margin-left: 10px;
+    margin-right: 15px;
    
 }
 

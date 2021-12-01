@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import RxFigureInput from '../../components/RxFigureInput';
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useFirestore } from '../../hooks/useFirestore';
  
@@ -27,9 +28,21 @@ export default function AddRxFigures() {
   const [mdaPdForms, setMdaPdForms] = useState("");
   const [mdaPdItems, setMdaPdItems] = useState("");
 
+  const paperExFormsChange = (e) => setPaperExForms(parseInt(e.target.value));
+  const paperExItemsChange = (e) => setPaperExItems(parseInt(e.target.value));
+  const paperPdFormsChange = (e) => setPaperPdForms(parseInt(e.target.value));
+  const paperPdItemsChange = (e) => setPaperPdItems(parseInt(e.target.value));
+  const epsExFormsChange = (e) => setEpsExForms(parseInt(e.target.value));
+  const epsExItemsChange = (e) => setEpsExItems(parseInt(e.target.value));
+  const epsPdFormsChange = (e) => setEpsPdForms(parseInt(e.target.value));
+  const epsPdItemsChange = (e) => setEpsPdItems(parseInt(e.target.value));
+  const mdsExFormsChange = (e) => setMdaExForms(parseInt(e.target.value));
+  const mdsExItemsChange = (e) => setMdaExItems(parseInt(e.target.value));
+  const mdsPdFormsChange = (e) => setMdaPdForms(parseInt(e.target.value));
+  const mdsPdItemsChange = (e) => setMdaPdItems(parseInt(e.target.value));
+
   // create an object for user who has created project using info from auth context
   
-
   const handleSubmit = async (e) => {
     e.preventDefault(e);
 
@@ -41,27 +54,29 @@ export default function AddRxFigures() {
     const dailyFigures = {
       addedBy,
       dateForFigures: date,
-      paperPdForms,
-      epsPdForms,
-      mdaPdForms,
-      paperExForms,
-      epsExForms,
-      mdaExForms,
-      paperPdItems,
-      epsPdItems,
-      mdaPdItems,
-      paperExItems,
-      epsExItems,
-      mdaExItems,
+      figures:{
+        paperPdForms,
+        epsPdForms,
+        mdaPdForms,
+        paperExForms,
+        epsExForms,
+        mdaExForms,
+        paperPdItems,
+        epsPdItems,
+        mdaPdItems,
+        paperExItems,
+        epsExItems,
+        mdaExItems,
+      }
     };
-    
+    console.log(dailyFigures)
     await addDocument(dailyFigures)
     
     if(!response.error) {
       setFiguresAdded(true)
-  
     }
   };
+  
 
   return (
     <>
@@ -70,9 +85,8 @@ export default function AddRxFigures() {
         <form onSubmit={handleSubmit}>
           <div className="date-div">
             <label htmlFor="dateInput" className="date-label">
-              <span>Please select a date for the figures you are entering</span>
+              <span>Please select a date for the figures you are entering:</span>
             </label>
-
             <input
               id="dateInput"
               required
@@ -86,143 +100,83 @@ export default function AddRxFigures() {
             <fieldset>
               <legend>FP10 Paper</legend>
               <div className="input-container">
-                <label>
-                  <span>Exempt Forms</span>
-                  <input
-                    required
-                    min="0"
-                    type="number"
-                    onChange={(e) => setPaperExForms(parseInt(e.target.value))}
-                    value={paperExForms}
-                  />
-                </label>
-                <label>
-                  <span>Exempt Items</span>
-                  <input
-                    required
-                    min="0"
-                    type="number"
-                    onChange={(e) => setPaperExItems(parseInt(e.target.value))}
-                    value={paperExItems}
-                  />
-                </label>
+                <RxFigureInput
+                  inputName="Exempt Forms"
+                  value={paperExForms}
+                  onChangeFn={paperExFormsChange}
+                />
+                <RxFigureInput
+                  inputName="Exempt Items"
+                  value={paperExItems}
+                  onChangeFn={paperExItemsChange}
+                />
               </div>
               <div className="input-container">
-                <label>
-                  <span>Paid Forms</span>
-                  <input
-                    required
-                    min="0"
-                    type="number"
-                    onChange={(e) => setPaperPdForms(parseInt(e.target.value))}
-                    value={paperPdForms}
-                  />
-                </label>
-                <label>
-                  <span>Paid Items</span>
-                  <input
-                    required
-                    min="0"
-                    type="number"
-                    onChange={(e) => setPaperPdItems(parseInt(e.target.value))}
-                    value={paperPdItems}
-                  />
-                </label>
+                <RxFigureInput
+                  inputName="Paid Forms"
+                  value={paperPdForms}
+                  onChangeFn={paperPdFormsChange}
+                />
+                <RxFigureInput
+                  inputName="Paid Items"
+                  value={paperPdItems}
+                  onChangeFn={paperPdItemsChange}
+                />
               </div>
             </fieldset>
             <fieldset>
               <legend className="token">EPS</legend>
               <div className="input-container">
-                <label>
-                  <span>Exempt Form</span>
-                  <input
-                    required
-                    type="number"
-                    min="0"
-                    onChange={(e) => setEpsExForms(parseInt(e.target.value))}
-                    value={epsExForms}
-                  />
-                </label>
-                <label>
-                  <span>Exempt Items</span>
-                  <input
-                    required
-                    type="number"
-                    min="0"
-                    onChange={(e) => setEpsExItems(parseInt(e.target.value))}
-                    value={epsExItems}
-                  />
-                </label>
+                <RxFigureInput
+                  inputName="Exempt Tokens"
+                  value={epsExForms}
+                  onChangeFn={epsExFormsChange}
+                />
+                <RxFigureInput
+                  inputName="Exempt Items"
+                  value={epsExItems}
+                  onChangeFn={epsExItemsChange}
+                />
               </div>
               <div className="input-container">
-                <label>
-                  <span>Paid Forms</span>
-                  <input
-                    required
-                    type="number"
-                    min="0"
-                    onChange={(e) => setEpsPdForms(parseInt(e.target.value))}
-                    value={epsPdForms}
-                  />
-                </label>
-                <label>
-                  <span>Paid Items</span>
-                  <input
-                    required
-                    type="number"
-                    min="0"
-                    onChange={(e) => setEpsPdItems(parseInt(e.target.value))}
-                    value={epsPdItems}
-                  />
-                </label>
+                <RxFigureInput
+                  inputName="Paid Tokens"
+                  value={epsPdForms}
+                  onChangeFn={epsPdFormsChange}
+                />
+                <RxFigureInput
+                  inputName="Paid Items"
+                  value={epsPdItems}
+                  onChangeFn={epsPdItemsChange}
+                />
               </div>
             </fieldset>
             <fieldset>
               <legend className="fp10mda">FP10MDA</legend>
               <div className="input-container">
-                <label>
-                  <span>Exempt Forms</span>
-                  <input
-                    required
-                    type="number"
-                    min="0"
-                    onChange={(e) => setMdaExForms(parseInt(e.target.value))}
-                    value={mdaExForms}
-                  />
-                </label>
-                <label>
-                  <span>Exempt Items</span>
-                  <input
-                    required
-                    type="number"
-                    min="0"
-                    onChange={(e) => setMdaExItems(parseInt(e.target.value))}
-                    value={mdaExItems}
-                  />
-                </label>
+                <RxFigureInput
+                  inputName="Exempt Forms"
+                  value={mdaExForms}
+                  onChangeFn={mdsExFormsChange}
+                />
+                <RxFigureInput
+                  inputName="Exempt Items"
+                  value={mdaExItems}
+                  onChangeFn={mdsExItemsChange}
+                />
               </div>
               <div className="input-container">
-                <label>
-                  <span>Paid Forms</span>
-                  <input
-                    required
-                    type="number"
-                    min="0"
-                    onChange={(e) => setMdaPdForms(parseInt(e.target.value))}
+                  <RxFigureInput
+                    inputName="Paid Forms"
                     value={mdaPdForms}
+                    onChangeFn={mdsPdFormsChange}
                   />
-                </label>
-                <label>
-                  <span>Paid Items</span>
-                  <input
-                    required
-                    type="number"
-                    min="0"
-                    onChange={(e) => setMdaPdItems(parseInt(e.target.value))}
+                  <RxFigureInput
+                    inputName="Paid Items"
                     value={mdaPdItems}
+                    onChangeFn={mdsPdItemsChange}
                   />
-                </label>
-              </div>
+                 </div>
             </fieldset>
           </div>
           {!figuresAdded && (
