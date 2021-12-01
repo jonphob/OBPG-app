@@ -54,21 +54,31 @@ export default function AddRxFigures() {
     const dailyFigures = {
       addedBy,
       dateForFigures: date,
-      figures:{
-        paperPdForms,
-        epsPdForms,
-        mdaPdForms,
-        paperExForms,
-        epsExForms,
-        mdaExForms,
-        paperPdItems,
-        epsPdItems,
-        mdaPdItems,
-        paperExItems,
-        epsExItems,
-        mdaExItems,
-      }
+      figures: {
+        paidForms: {
+          paperPdForms,
+          epsPdForms,
+          mdaPdForms,
+          totalPdForms: paperPdForms + epsPdForms + mdaPdForms
+        },
+        paidItems: {
+          paperPdItems,
+          epsPdItems,
+          mdaPdItems,
+        },
+        exemptForms: {
+          paperExForms,
+          epsExForms,
+          mdaExForms,
+        },
+        exemptItems: {
+          paperExItems,
+          epsExItems,
+          mdaExItems,
+        },
+      },
     };
+
     console.log(dailyFigures)
     await addDocument(dailyFigures)
     
