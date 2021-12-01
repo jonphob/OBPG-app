@@ -40,7 +40,7 @@ export default function Signup() {
 
       setThumbnailError(null)
       setThumbnail(selected)
-      console.log('thumbnail updated')
+      
     }
   
   return (

@@ -1,82 +1,87 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { useFirestore } from '../../hooks/useFirestore';
+ 
 import './AddRxFigure.css'
 
-
-
 export default function AddRxFigures() {
+  const { addDocument, response } = useFirestore('rxFigures')//need to specify a collection to store
+  const [date, setDate] = useState("");
+  const [figuresAdded, setFiguresAdded] = useState(false);
+  const { user } = useAuthContext();
+  const navigate = useNavigate()
 
-      const [paperExForms, setPaperExForms] = useState(null)
-      const [paperExItems, setPaperExItems] = useState(null)
-      const [paperPdForms, setPaperPdForms] = useState(null)
-      const [paperPdItems, setPaperPdItems] = useState(null)
+  const [paperExForms, setPaperExForms] = useState("");
+  const [paperExItems, setPaperExItems] = useState("");
+  const [paperPdForms, setPaperPdForms] = useState("");
+  const [paperPdItems, setPaperPdItems] = useState("");
 
-      const [epsExForms, setEpsExForms] = useState(null)
-      const [epsExItems, setEpsExItems] = useState(null)
-      const [epsPdForms, setEpsPdForms] = useState(null)
-      const [epsPdItems, setEpsPdItems] = useState(null)
+  const [epsExForms, setEpsExForms] = useState("");
+  const [epsExItems, setEpsExItems] = useState("");
+  const [epsPdForms, setEpsPdForms] = useState("");
+  const [epsPdItems, setEpsPdItems] = useState("");
 
-      const [mdaExForms, setMdaExForms] = useState(null)
-      const [mdaExItems, setMdaExItems] = useState(null)
-      const [mdaPdForms, setMdaPdForms] = useState(null)
-      const [mdaPdItems, setMdaPdItems] = useState(null)
+  const [mdaExForms, setMdaExForms] = useState("");
+  const [mdaExItems, setMdaExItems] = useState("");
+  const [mdaPdForms, setMdaPdForms] = useState("");
+  const [mdaPdItems, setMdaPdItems] = useState("");
 
-      const [totalPdForms, setTotalPdForms] = useState(null)
-      const [totalPdItems, setTotalPdItems] = useState(null)
-      const [totalExForms, setTotalExForms] = useState(null)
-      const [totalExItems, setTotalExItems] = useState(null)
-
-     useEffect(() => {
-
-       let totalPaidForms = paperPdForms + epsPdForms + mdaPdForms;
-       let totalPaidItems = paperPdItems + epsPdItems + mdaPdItems;
-       let totalExemptForms = paperExForms + epsExForms + mdaExForms;
-       let totalExemptItems = paperExItems + epsExItems + mdaExItems;
-
-       setTotalPdForms(totalPaidForms);
-       setTotalPdItems(totalPaidItems);
-       setTotalExForms(totalExemptForms);
-       setTotalExItems(totalExemptItems);
-     }, [
-       paperPdForms,
-       epsPdForms,
-       mdaPdForms,
-       paperExForms,
-       epsExForms,
-       mdaExForms,
-       paperPdItems,
-       epsPdItems,
-       mdaPdItems,
-       paperExItems,
-       epsExItems,
-       mdaExItems
-     ]);
-
-      const handleSubmit = (e) => {
-        e.preventDefault(e);
-        console.log({
-          paperPdForms,
-          epsPdForms,
-          mdaPdForms,
-          paperExForms,
-          epsExForms,
-          mdaExForms,
-          paperPdItems,
-          epsPdItems,
-          mdaPdItems,
-          paperExItems,
-          epsExItems,
-          mdaExItems,
-        });
-        
-      };
+  // create an object for user who has created project using info from auth context
   
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(e);
+
+    const addedBy = {
+      displayName: user.displayName,
+      id: user.uid,
+    };
+    
+    const dailyFigures = {
+      addedBy,
+      dateForFigures: date,
+      paperPdForms,
+      epsPdForms,
+      mdaPdForms,
+      paperExForms,
+      epsExForms,
+      mdaExForms,
+      paperPdItems,
+      epsPdItems,
+      mdaPdItems,
+      paperExItems,
+      epsExItems,
+      mdaExItems,
+    };
+    
+    await addDocument(dailyFigures)
+    
+    if(!response.error) {
+      setFiguresAdded(true)
   
-  
+    }
+  };
+
   return (
     <>
       <h2>Add Prescription Figures</h2>
       <div className="add-figures-form">
         <form onSubmit={handleSubmit}>
+          <div className="date-div">
+            <label htmlFor="dateInput" className="date-label">
+              <span>Please select a date for the figures you are entering</span>
+            </label>
+
+            <input
+              id="dateInput"
+              required
+              type="date"
+              onChange={(e) => setDate(e.target.value)}
+              value={date}
+            />
+          </div>
+
           <div className="rx-container">
             <fieldset>
               <legend>FP10 Paper</legend>
@@ -84,20 +89,21 @@ export default function AddRxFigures() {
                 <label>
                   <span>Exempt Forms</span>
                   <input
-                    
+                    required
                     min="0"
                     type="number"
                     onChange={(e) => setPaperExForms(parseInt(e.target.value))}
-                    value={paperExForms || 0}
+                    value={paperExForms}
                   />
                 </label>
                 <label>
                   <span>Exempt Items</span>
                   <input
+                    required
                     min="0"
                     type="number"
                     onChange={(e) => setPaperExItems(parseInt(e.target.value))}
-                    value={paperExItems || 0}
+                    value={paperExItems}
                   />
                 </label>
               </div>
@@ -105,19 +111,21 @@ export default function AddRxFigures() {
                 <label>
                   <span>Paid Forms</span>
                   <input
+                    required
                     min="0"
                     type="number"
                     onChange={(e) => setPaperPdForms(parseInt(e.target.value))}
-                    value={paperPdForms || 0}
+                    value={paperPdForms}
                   />
                 </label>
                 <label>
                   <span>Paid Items</span>
                   <input
+                    required
                     min="0"
                     type="number"
                     onChange={(e) => setPaperPdItems(parseInt(e.target.value))}
-                    value={paperPdItems || 0}
+                    value={paperPdItems}
                   />
                 </label>
               </div>
@@ -128,19 +136,21 @@ export default function AddRxFigures() {
                 <label>
                   <span>Exempt Form</span>
                   <input
+                    required
                     type="number"
                     min="0"
                     onChange={(e) => setEpsExForms(parseInt(e.target.value))}
-                    value={epsExForms || 0}
+                    value={epsExForms}
                   />
                 </label>
                 <label>
                   <span>Exempt Items</span>
                   <input
+                    required
                     type="number"
                     min="0"
                     onChange={(e) => setEpsExItems(parseInt(e.target.value))}
-                    value={epsExItems || 0}
+                    value={epsExItems}
                   />
                 </label>
               </div>
@@ -148,19 +158,21 @@ export default function AddRxFigures() {
                 <label>
                   <span>Paid Forms</span>
                   <input
+                    required
                     type="number"
                     min="0"
                     onChange={(e) => setEpsPdForms(parseInt(e.target.value))}
-                    value={epsPdForms || 0}
+                    value={epsPdForms}
                   />
                 </label>
                 <label>
                   <span>Paid Items</span>
                   <input
+                    required
                     type="number"
                     min="0"
                     onChange={(e) => setEpsPdItems(parseInt(e.target.value))}
-                    value={epsPdItems || 0}
+                    value={epsPdItems}
                   />
                 </label>
               </div>
@@ -171,19 +183,21 @@ export default function AddRxFigures() {
                 <label>
                   <span>Exempt Forms</span>
                   <input
+                    required
                     type="number"
                     min="0"
                     onChange={(e) => setMdaExForms(parseInt(e.target.value))}
-                    value={mdaExForms || 0}
+                    value={mdaExForms}
                   />
                 </label>
                 <label>
                   <span>Exempt Items</span>
                   <input
+                    required
                     type="number"
                     min="0"
                     onChange={(e) => setMdaExItems(parseInt(e.target.value))}
-                    value={mdaExItems || 0}
+                    value={mdaExItems}
                   />
                 </label>
               </div>
@@ -191,49 +205,30 @@ export default function AddRxFigures() {
                 <label>
                   <span>Paid Forms</span>
                   <input
+                    required
                     type="number"
                     min="0"
                     onChange={(e) => setMdaPdForms(parseInt(e.target.value))}
-                    value={mdaPdForms || 0}
+                    value={mdaPdForms}
                   />
                 </label>
                 <label>
                   <span>Paid Items</span>
                   <input
+                    required
                     type="number"
                     min="0"
                     onChange={(e) => setMdaPdItems(parseInt(e.target.value))}
-                    value={mdaPdItems || 0}
+                    value={mdaPdItems}
                   />
-                </label>
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend className=""> Daily Totals</legend>
-              <div className="input-container">
-                <label>
-                  <span>Exempt Forms</span>
-                  <input readOnly value={totalExForms || 0} />
-                </label>
-                <label>
-                  <span>Exempt Items</span>
-                  <input readOnly value={totalExItems || 0}  />
-                </label>
-              </div>
-              <div className="input-container">
-                <label>
-                  <span>Paid Forms</span>
-                  <input readOnly value={totalPdForms || 0} />
-                </label>
-                <label>
-                  <span>Paid Items</span>
-                  <input readOnly value={totalPdItems || 0} />
                 </label>
               </div>
             </fieldset>
           </div>
-          <button className="btn submit-figures-btn">Submit Figures</button>
+          {!figuresAdded && (
+            <button className="btn submit-figures-btn">Submit Figures</button>
+          )}
+          {figuresAdded && <p className="">Figures Added</p>}
         </form>
       </div>
     </>

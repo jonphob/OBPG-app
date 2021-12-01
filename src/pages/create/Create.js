@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
 import Select from 'react-select'
+import { useFirestore } from '../../hooks/useFirestore'
 import { useCollection } from '../../hooks/useCollection'
 import { timestamp } from '../../firebase/config'
 import { useAuthContext } from '../../hooks/useAuthContext'
 
 // styles
 import './Create.css'
+
 
 const categories = [
   { value: 'development', label: 'Development' },
@@ -23,9 +26,11 @@ export default function Create() {
   const [assignedUsers, setAssignedUsers] = useState([]);
   const [formError, setFormError] = useState(null)
 
+  const { addDocument, response } = useFirestore('projects')
   const { documents } = useCollection("users");
   const [users, setUsers] = useState([]);
   const { user } = useAuthContext()
+  const navigate = useNavigate()
 
   // create user values for react-select
   useEffect(() => {
@@ -53,12 +58,13 @@ export default function Create() {
       return
     }
 
-    // create an object for user who has created project using info form auth context
+    // create an object for user who has created project using info from auth context
     const createdBy = {
         displayName: user.displayName,
         photoURL: user.photoURL,
-        id: user.id
+        id: user.uid
     }
+
     // clean up data from user object to get info we need
     const assignedUsersList = assignedUsers.map((u) => {
         return {
@@ -66,18 +72,24 @@ export default function Create() {
             photoURL: u.value.photoURL,
             id: u.value.id
         }
-    })
-    // create doc and save to firestore here if 
-    // const project = {
-    //   name: name, //can be shortened to just name
-    //   details: details,
-    //   category: category.value,
-    //   dueDate: timestamp.fromDate(new Date(dueDate)), //creates new timestamp from date given to fn
-    //   comments: [],
-    //   createdBy: createdBy,
-    //   assignedUsersList: assignedUsersList
-    // };
-    console.log(name, details, dueDate, category.value, assignedUsers);
+      })
+
+    // create doc and save to firestore here
+    const project = {
+      name: name, //can be shortened to just name
+      details: details,
+      category: category.value,
+      dueDate: timestamp.fromDate(new Date(dueDate)), //creates new timestamp from date given to fn
+      comments: [],
+      createdBy: createdBy,
+      assignedUsersList: assignedUsersList
+    };
+    
+    await addDocument(project) // so waits here while addDocument completes
+
+    if(!response.error){
+      navigate('/')
+    }
   };
 
   return (

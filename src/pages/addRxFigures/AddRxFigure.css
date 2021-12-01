@@ -50,6 +50,23 @@ legend {
     margin-bottom: 30px;
 }  
 
+#dateInput {
+    width:456px;
+    height:40px
+}
+
 .submit-figures-btn {
     margin-left: 3px;
+}
+
+.date-label {
+    padding-top: 8px;
+    width: -moz-fit-content;
+    width: fit-content;
+   
+}
+
+.date-div {
+    display: flex;
+    align-items: center;
 }
