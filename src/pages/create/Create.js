@@ -94,10 +94,10 @@ export default function Create() {
 
   return (
     <div className="create-form">
-      <h2 className="title">Create New Project</h2>
+      <h2 className="title">Add CPD Record</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          <span>Project name:</span>
+          <span>CPD Learning Title:</span>
           <input
             required
             type="text"
@@ -106,7 +106,7 @@ export default function Create() {
           />
         </label>
         <label>
-          <span>Project details:</span>
+          <span>What did you learn and how did you learn?</span>
           <textarea
             required
             type="text"
@@ -115,7 +115,7 @@ export default function Create() {
           ></textarea>
         </label>
         <label>
-          <span>Due date:</span>
+          <span>Date completed</span>
           <input
             required
             type="date"
@@ -124,7 +124,7 @@ export default function Create() {
           />
         </label>
         <label>
-          <span>Project Category:</span>
+          <span>Learning Category:</span>
           <Select
             onChange={(option) => setCategory(option)}
             options={categories}

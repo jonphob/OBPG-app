@@ -14,8 +14,16 @@ export const useDocument = (collection, id) => {
         const ref = projectFirestore.collection(collection).doc(id)
 
        const unsubscribe = ref.onSnapshot((snapshot) => {
-            setDocument({...snapshot.data(), id: snapshot.id})
-            setError(null)
+        // check to see if document has data has an
+            if(snapshot.data()) {
+                setDocument({ ...snapshot.data(), id: snapshot.id });
+                setError(null);
+            }
+            else {
+                setError('No such document exists')
+            }
+
+            
             //if error 2nd argument is where its returned
         }, (error) => {
             console.log(error)
@@ -27,7 +35,7 @@ export const useDocument = (collection, id) => {
         return () => unsubscribe()
         
     }, [collection, id])
-
+    //return document and any error
     return { document, error }
 
 }
