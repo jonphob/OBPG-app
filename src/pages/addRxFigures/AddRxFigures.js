@@ -1,18 +1,19 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import toast, { Toaster } from 'react-hot-toast';
 import RxFigureInput from '../../components/RxFigureInput';
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useFirestore } from '../../hooks/useFirestore';
- 
+
+// styles
 import './AddRxFigure.css'
 
+
 export default function AddRxFigures() {
+
   const { addDocument, response } = useFirestore('rxFigures')//need to specify a collection to store
   const [date, setDate] = useState("");
-  const [figuresAdded, setFiguresAdded] = useState(false);
   const { user } = useAuthContext();
-  const navigate = useNavigate()
-
+  
   const [paperExForms, setPaperExForms] = useState("");
   const [paperExItems, setPaperExItems] = useState("");
   const [paperPdForms, setPaperPdForms] = useState("");
@@ -41,11 +42,19 @@ export default function AddRxFigures() {
   const mdsPdFormsChange = (e) => setMdaPdForms(parseInt(e.target.value));
   const mdsPdItemsChange = (e) => setMdaPdItems(parseInt(e.target.value));
 
+//   // Handle Toast button
+//   const handleClick = (e) => {
+//     if(e === 'success'){
+//     toast.success("Rx Figures Submitted Succesfully")
+//   } else if(e === 'error') {
+//     toast.error('There was a problem submitting figures, please try again')
+//   }
+// }
+
   // create an object for user who has created project using info from auth context
   
   const handleSubmit = async (e) => {
     e.preventDefault(e);
-
     const addedBy = {
       displayName: user.displayName,
       id: user.uid,
@@ -79,23 +88,97 @@ export default function AddRxFigures() {
       },
     };
 
-    console.log(dailyFigures)
+    
     await addDocument(dailyFigures)
     
     if(!response.error) {
-      setFiguresAdded(true)
+      toast.success("Rx Figures Added");
+      //set all input states to empty strings
+     
+      setDate("");
+      setPaperExForms("");
+      setPaperExItems("");
+      setPaperPdForms("");
+      setPaperPdItems("");
+      setEpsExForms("");
+      setEpsExItems("");
+      setEpsPdForms("");
+      setEpsPdItems("");
+      setMdaExForms("");
+      setMdaExItems("");
+      setMdaPdForms("");
+      setMdaPdItems("");
+    } else {
+      toast.error('There was an error, please try again')
     }
   };
   
 
   return (
     <>
+      <div>
+        <Toaster
+          position="bottom-center"
+          reverseOrder={false}
+          gutter={8}
+          containerClassName=""
+          containerStyle={{
+            position: "absolute",
+            bottom: "100px",
+          }}
+          toastOptions={{
+            // Define default options
+            className: "",
+            duration: 5000,
+            style: {
+              background: "#fff",
+              color: "black",
+
+              height: "50px",
+              borderRadius: "10px",
+            },
+            // Default options for specific types
+            success: {
+              iconTheme: {
+                primary: "white",
+                secondary: "#4CAA3C",
+              },
+              duration: 5000,
+              style: {
+                background: "#4CAA3C",
+                color: "#fff",
+              },
+              theme: {
+                primary: "",
+                secondary: "white",
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: "white",
+                secondary: "#FF6B47",
+              },
+              duration: 5000,
+              style: {
+                background: "#FF6B47",
+                color: "#fff",
+              },
+              // theme: {
+              //   primary: "red",
+              //   secondary: "white",
+              // },
+            },
+          }}
+        />
+      </div>
       <h2>Add Prescription Figures</h2>
       <div className="add-figures-form">
         <form onSubmit={handleSubmit}>
           <div className="date-div">
             <label htmlFor="dateInput" className="date-label">
-              <span>Please select a date for the figures you are entering:</span>
+              <span>
+                Please select a date for the figures you are entering:
+              </span>
             </label>
             <input
               id="dateInput"
@@ -176,23 +259,23 @@ export default function AddRxFigures() {
                 />
               </div>
               <div className="input-container">
-                  <RxFigureInput
-                    inputName="Paid Forms"
-                    value={mdaPdForms}
-                    onChangeFn={mdsPdFormsChange}
-                  />
-                  <RxFigureInput
-                    inputName="Paid Items"
-                    value={mdaPdItems}
-                    onChangeFn={mdsPdItemsChange}
-                  />
-                 </div>
+                <RxFigureInput
+                  inputName="Paid Forms"
+                  value={mdaPdForms}
+                  onChangeFn={mdsPdFormsChange}
+                />
+                <RxFigureInput
+                  inputName="Paid Items"
+                  value={mdaPdItems}
+                  onChangeFn={mdsPdItemsChange}
+                />
+              </div>
             </fieldset>
           </div>
-          {!figuresAdded && (
+          <div className="btn-container">
             <button className="btn submit-figures-btn">Submit Figures</button>
-          )}
-          {figuresAdded && <p className="">Figures Added</p>}
+            <button className="btn submit-figures-btn">View figures</button>
+          </div>
         </form>
       </div>
     </>

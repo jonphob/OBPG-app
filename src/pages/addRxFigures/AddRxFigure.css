@@ -73,3 +73,8 @@ legend {
     display: flex;
     align-items: center;
 }
+
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+}
