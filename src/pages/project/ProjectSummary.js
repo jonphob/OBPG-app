@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router';
 
 export default function ProjectSummary({ project }) {
 
-    const { deleteDocument } = useFirestore('projects')
-    const { user } = useAuthContext()
+    const { deleteDocument } = useFirestore('projects')// to access hook to delete doc
+    const { user } = useAuthContext() // to access logged in user
     const navigate = useNavigate()
 
     const handleClick = (e) => {
@@ -30,7 +30,7 @@ export default function ProjectSummary({ project }) {
           <h4>Project is assigned to:</h4>
           <div className="assigned-users">
             {project.assignedUsersList.map((user) => (
-              <div key={project.id}>
+              <div key={user.id}>
                 <Avatar src={user.photoURL} />
               </div>
             ))}

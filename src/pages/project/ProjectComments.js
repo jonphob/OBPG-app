@@ -40,7 +40,7 @@ export default function ProjectComments({ project }) {
                     <Avatar src={comment.photoURL} />
                     <p>{comment.displayName}</p>
                   </div>
-                  <div className="comments-dates">
+                  <div className="comment-dates">
                     <p>{formatDistanceToNow(comment.createdAt.toDate(),{ 
                             addSuffix:true })}</p>
                   </div>
