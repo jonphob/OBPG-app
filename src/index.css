@@ -73,6 +73,10 @@ input[type="date" i] {
     overflow: hidden;
     padding: 6px;
 }
+
+input:focus-visible {
+  outline: #4caa3c 3px solid;
+}
 .error {
   color: red;
   background: pink;

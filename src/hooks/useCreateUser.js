@@ -49,7 +49,7 @@ export const useCreateUser = () => {
 
       // dispatch login action to update global auth context so will have access to this user
       // in whole application
-      dispatch({ type: "LOGIN", payload: res.user });
+      // dispatch({ type: "LOGIN", payload: res.user });
 
       if (!isCancelled) {
         setIsPending(false);

@@ -21,15 +21,31 @@ const customStyles = {
   }),
   valueContainer: (provided, state) => ({
     ...provided,
+    ":focusVisible": {
+      outline: "#4caa3c 3px solid",
+    },
     padding: "0px 8px",
+  }),
+  control: (provided, state) => ({
+    ...provided,
+
+    ":hover": {
+      borderColor: "#4CAA3C",
+    },
   }),
 };
 
 const branches = [
-  { value: "albertwilde", label: "Albert Wilde" },
-  { value: "design", label: "Design" },
-  { value: "sales", label: "Sales" },
-  { value: "marketing", label: "Marketing" },
+  { value: "Albert Wilde", label: "Albert Wilde Pharmacy" },
+  { value: "Bispham", label: "Bispham Pharmacy" },
+  { value: "Burscough", label: "Burscough Pharmacy" },
+  { value: "Cleveleys", label: "Cleveleys Pharmacy" },
+  { value: "CleveleysHC", label: "Cleveleys HC Pharmacy" },
+  { value: "FleetwoodHC", label: "Fleetwood HC Pharmacy" },
+  { value: "HeadOffice", label: "Head Office" },
+  { value: "MillLane", label: "Mill Lane Pharmacy" },
+  { value: "Riverside", label: "Riverside Pharmacy" },
+  { value: "Warburtons", label: "Warburtons Chemists" },
 ];
 
 export default function CreateUser() {
@@ -43,7 +59,7 @@ export default function CreateUser() {
   const [role, setRole] = useState("")
   const [roleList, setRoleList] = useState([])
   const [branch, setBranch] = useState("")
-  const [ formError, setFormError] = useState(null)
+  const [formError, setFormError] = useState(null)
 
 
   const { createUser, isPending, error } = useCreateUser();
@@ -76,7 +92,7 @@ export default function CreateUser() {
 
     // create an object for user who has created project using info from auth context
     const createdBy = {
-      name: user.firstName + " " + user.lastName,
+      name: user.displayName,
       id: user.uid,
       createdAt: timestamp.fromDate(new Date()), //creates new timestamp from date given to fn
     };
@@ -90,9 +106,17 @@ export default function CreateUser() {
       role,
       createdBy,
     };
-    console.log(email, password, firstName, lastName, branch, role, createdBy)
-    console.log(newUser);
+    
     await createUser(email, password, firstName, lastName, branch, role, createdBy); // so waits here while addDocument completes
+
+    if(!error){
+      setFirstName('')
+      setLastName('')
+      setEmail('')
+      setPassword('')
+      setRole(null)
+      setBranch(null)
+    }
   };;
 
   return (
@@ -108,7 +132,7 @@ export default function CreateUser() {
               onChange={(e) => setFirstName(e.target.value)}
               value={firstName}
             />
-          </label>
+            </label>
           <label>
             <span>last name:</span>
             <input
@@ -147,7 +171,7 @@ export default function CreateUser() {
             <Select
               styles={customStyles}
               options={branches}
-              onChange={(option) => setBranch(option)}
+              onChange={(option) => setBranch(option.value)}
             />
           </label>
           <label>
@@ -155,7 +179,7 @@ export default function CreateUser() {
             <Select
               styles={customStyles}
               options={roleList}
-              onChange={(option) => setRole(option)}
+              onChange={(option) => setRole(option.value)}
             />
           </label>
         </div>

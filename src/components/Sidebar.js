@@ -14,7 +14,7 @@ export default function Sidebar() {
 
     const greeting = useGreeting()
     const { user } = useAuthContext()
-    console.log(user.displayName)
+    
     
     return (
       <div className="sidebar">
