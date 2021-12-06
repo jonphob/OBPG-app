@@ -15,7 +15,7 @@ export default function Login() {
     }
 
     return (
-      <form className="auth-form" onSubmit={handleSubmit}>
+      <form className="login-form" onSubmit={handleSubmit}>
         <h2>Log in</h2>
         <label>
           <span>email:</span>
@@ -34,6 +34,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
+          <span className='forgot-pwd'>Forgot Password?</span>
         </label>
         
         {!isPending && <button className="btn">Log in</button>}

@@ -39,8 +39,8 @@
 
 /* project comments */
 .comments-section{
-    height:55vh;
-    overflow: scroll;
+    max-height:55vh;
+    overflow-y: auto;
 }
 .project-comments label {
   margin-bottom: 0px;
@@ -73,7 +73,7 @@
   height: 30px;
   margin-right: 10px;
 }
-.comment-date {
+.comment-dates {
   color: var(--text-color);
   font-size: 0.9em;
   margin: 4px 0 10px;

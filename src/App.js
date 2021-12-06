@@ -7,7 +7,7 @@ import './App.css'
 import Dashboard from './pages/dashboard/Dashboard';
 import Create from './pages/create/Create';
 import Login from './pages/login/Login';
-import Signup from './pages/signup/Signup';
+import CreateUser from './pages/CreateUser/CreateUser'
 import Project from './pages/project/Project';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -44,8 +44,8 @@ const { user, authIsReady } = useAuthContext()
               ></Route>
 
               <Route
-                path="/signup"
-                element={(!user && <Signup />) || (user && <Navigate to="/" />)}
+                path="/createUser"
+                element={(user && <CreateUser />) || (user && <Navigate to="/" />)}
               ></Route>
               <Route
                 path="/project/:id"

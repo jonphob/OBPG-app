@@ -68,7 +68,6 @@ export default function AddRxFigures() {
           paperPdForms,
           epsPdForms,
           mdaPdForms,
-          totalPdForms: paperPdForms + epsPdForms + mdaPdForms
         },
         paidItems: {
           paperPdItems,

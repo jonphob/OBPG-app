@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { useLogout } from '../hooks/useLogout'
 
 // styles & images
@@ -19,8 +19,8 @@ export default function Navbar() {
           </li>
           {!user && (
             <>
-                <li><Link to="/login">Login</Link></li>
-                <li><Link to="/signup">Sign Up</Link></li>
+                {/* <li><Link to="/login">Login</Link></li> */}
+                {/* <li><Link to="/signup">Sign Up</Link></li> */}
             </>)}
           {user && (
           <li>

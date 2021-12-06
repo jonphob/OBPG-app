@@ -24,7 +24,9 @@ export default function Create() {
   const [dueDate, setDueDate] = useState("");
   const [category, setCategory] = useState("");
   const [assignedUsers, setAssignedUsers] = useState([]);
-  const [formError, setFormError] = useState(null)
+  const [formError, setFormError] = useState(null);
+  // const [thumbnail, setThumbnail] = useState(null);
+  // const [thumbnailError, setThumbnailError] = useState(null);
 
   const { addDocument, response } = useFirestore('projects')
   const { documents } = useCollection("users");
@@ -42,6 +44,37 @@ export default function Create() {
       );
     }
   }, [documents]);
+
+  // Code for file upload
+  //  const handleFileChange = (e) => {
+  //    setThumbnail(null);
+  //    let selected = e.target.files[0];
+  //    console.log(selected);
+
+  //    if (!selected) {
+  //      setThumbnailError("Please select a file");
+  //      return;
+  //    }
+  //    if (!selected.type.includes("image")) {
+  //      setThumbnailError("Selected file must be an image");
+  //      return;
+  //    }
+  //    if (selected.size > 100000) {
+  //      setThumbnailError("Image file size must be less than 100kb");
+  //      return;
+  //    }
+
+  //    setThumbnailError(null);
+  //    setThumbnail(selected);
+  //  };
+
+   
+     /* <label>
+        <span>profile thumbnail:</span>
+        <input required type="file" onChange={handleFileChange} />
+        {thumbnailError && <div className="error">{thumbnailError}</div>}
+      </label> */
+   
 
 
   const handleSubmit = async (e) => {
