@@ -1,4 +1,5 @@
 .avatar {
+  filter: invert(56%) sepia(21%) saturate(1308%) hue-rotate(65deg) brightness(96%) contrast(92%);
   display: inline-block;
   width: 50px;
   height: 50px;

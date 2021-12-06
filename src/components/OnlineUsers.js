@@ -1,4 +1,5 @@
 import { useCollection } from '../hooks/useCollection'
+import img from '../assets/personIcon.svg'
 import Avatar from './Avatar'
 
 //styles
@@ -15,8 +16,8 @@ export default function OnlineUsers() {
             {documents && documents.map(user => (
                 <div key={user.id} className='user-list-item'>
                     {<span className={user.online ? "online-user" : "offline-user"}></span> }
-                    <span>{user.displayName}</span>
-                    <Avatar src={user.photoURL}/>
+                    <span>{user.firstName}</span>
+                    <Avatar src={img}/>
                 </div>
             ))}
 

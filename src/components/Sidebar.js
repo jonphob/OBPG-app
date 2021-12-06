@@ -8,6 +8,7 @@ import "./Sidebar.css";
 import AddIcon from "../assets/add_icon.svg";
 import DashboardIcon from "../assets/dashboard_icon.svg";
 import Avatar from "./Avatar";
+import userIcon from '../assets/personIcon.svg'
 
 export default function Sidebar() {
 
@@ -19,9 +20,9 @@ export default function Sidebar() {
       <div className="sidebar">
         <div className="sidebar-content">
           <div className="user">
-            <Avatar src={user.photoURL} />
+            <Avatar src={userIcon} />
             <p>
-              {greeting} {user.displayName}
+              {greeting}, {user.displayName}
             </p>
           </div>
           <nav className="links">

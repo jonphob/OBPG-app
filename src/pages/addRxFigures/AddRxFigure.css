@@ -2,14 +2,12 @@
   max-width: 100%;
   
 }
-
 .rx-container {
     margin-top: 30px;
     display: flex;
     /* grid-template-columns: 1fr 1fr 1fr;
     gap:30px; */
 }
-
 .rx-container span{
     font-size: 13px;
 }
@@ -28,12 +26,15 @@ fieldset {
 }
 
 legend {
-    background-color:var(--primary-color);
-    color: #fff;
+    
+    color: #3e3e3e;
     padding: 3px 30px;
     border-radius: 5px;
     width:130px;
     font-size: 1.3rem;
+}
+.fp10paper {
+    background-color: #C3E0A4
 }
 
 .fp10mda {

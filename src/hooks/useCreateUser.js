@@ -8,17 +8,25 @@ export const useCreateUser = () => {
   const [isPending, setIsPending] = useState(false)
   const { dispatch } = useAuthContext()
 
-  const createUser = async (firstName, lastName, email, password, branch, role) => {
-    setError(null)
-    setIsPending(true)
-  
+  const createUser = async (
+    email,
+    password,
+    firstName,
+    lastName,
+    branch,
+    role,
+    createdBy
+  ) => {
+    setError(null);
+    setIsPending(true);
+
     try {
       // signup (this creates new user within firebase)
-      const res = await projectAuth.createUserWithEmailAndPassword(email, password)
+      const res = await projectAuth.createUserWithEmailAndPassword(email, password);
 
       // if no response(e.g. network problem) handle the error
       if (!res) {
-        throw new Error('Could not create user, please try again')
+        throw new Error("Could not create user, please try again");
       }
 
       // upload user thumbnail
@@ -27,33 +35,33 @@ export const useCreateUser = () => {
       // const imgURL = await img.ref.getDownloadURL()
 
       // add display name to user using updateProfile of above newly created user
-      // await res.user.updateProfile({ displayName, photoURL: imgURL })
+      await res.user.updateProfile({ displayName: firstName });
 
       // create user document in database
-      await projectFirestore.collection('users').doc(res.user.uid).set({
+      await projectFirestore.collection("users").doc(res.user.uid).set({
         online: false,
         firstName,
         lastName,
         branch,
-        role
-      })
-      
-      // dispatch login action to update global auth context so will have access to this user 
+        role,
+        createdBy,
+      });
+
+      // dispatch login action to update global auth context so will have access to this user
       // in whole application
-      dispatch({ type: 'LOGIN', payload: res.user })
+      dispatch({ type: "LOGIN", payload: res.user });
 
       if (!isCancelled) {
-        setIsPending(false)
-        setError(null)
+        setIsPending(false);
+        setError(null);
       }
-    } 
-    catch(err) {
+    } catch (err) {
       if (!isCancelled) {
-        setError(err.message)
-        setIsPending(false)
+        setError(err.message);
+        setIsPending(false);
       }
     }
-  }
+  };
 
   useEffect(() => {
     return () => setIsCancelled(true)

@@ -19,11 +19,7 @@ export default function Navbar() {
           </li>
           {!user && (
             <>
-<<<<<<< HEAD
                 {/* <li><Link to="/login">Login</Link></li> */}
-=======
-                <li><Link to="/login">Login</Link></li>
->>>>>>> 2feaf79e0346a1e5e6161c3234bd6c7bb8c7d2eb
                 {/* <li><Link to="/signup">Sign Up</Link></li> */}
             </>)}
           {user && (

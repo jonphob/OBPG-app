@@ -44,7 +44,7 @@ const { user, authIsReady } = useAuthContext()
               ></Route>
 
               <Route
-                path="/createUser"
+                path="/createuser"
                 element={(user && <CreateUser />) || (user && <Navigate to="/" />)}
               ></Route>
               <Route

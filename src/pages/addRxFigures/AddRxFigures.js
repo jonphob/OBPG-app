@@ -190,7 +190,7 @@ export default function AddRxFigures() {
 
           <div className="rx-container">
             <fieldset>
-              <legend>FP10 Paper</legend>
+              <legend className="fp10paper">FP10 Paper</legend>
               <div className="input-container">
                 <RxFigureInput
                   inputName="Exempt Forms"

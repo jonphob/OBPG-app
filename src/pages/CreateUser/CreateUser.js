@@ -33,6 +33,7 @@ const branches = [
 ];
 
 export default function CreateUser() {
+  
   const { user } = useAuthContext();
   const { documents } = useCollection("roles", 'id');
   const [firstName, setFirstName] = useState("");
@@ -47,13 +48,13 @@ export default function CreateUser() {
 
   const { createUser, isPending, error } = useCreateUser();
 
-  // create user values for react-select
+  // create user values for role select box
   useEffect(() => {
     
     if (documents) {
       setRoleList(
         documents.map((role) => {
-          return { value: { ...role, id: role.id }, label: role.name };
+          return { value:role.name , label: role.name };
         })
       );
     }
@@ -75,9 +76,9 @@ export default function CreateUser() {
 
     // create an object for user who has created project using info from auth context
     const createdBy = {
-      name: user.firstName + ' ' + user.lastName,
+      name: user.firstName + " " + user.lastName,
       id: user.uid,
-      createdAt: timestamp.fromDate(new Date.now()), //creates new timestamp from date given to fn
+      createdAt: timestamp.fromDate(new Date()), //creates new timestamp from date given to fn
     };
 
     const newUser = {
@@ -86,13 +87,13 @@ export default function CreateUser() {
       email,
       password,
       branch,
-      role, 
-      createdBy
-      
+      role,
+      createdBy,
     };
-
-
-  };
+    console.log(email, password, firstName, lastName, branch, role, createdBy)
+    console.log(newUser);
+    await createUser(email, password, firstName, lastName, branch, role, createdBy); // so waits here while addDocument completes
+  };;
 
   return (
     <form className="auth-form" onSubmit={handleSubmit}>
