@@ -60,13 +60,14 @@ export default function CreateUser() {
   const [roleList, setRoleList] = useState([])
   const [branch, setBranch] = useState("")
   const [formError, setFormError] = useState(null)
+  const [isActive, setIsActive] = useState(true)
 
 
   const { createUser, isPending, error } = useCreateUser();
 
   // create user values for role select box
   useEffect(() => {
-    
+    console.log(documents)
     if (documents) {
       setRoleList(
         documents.map((role) => {
@@ -96,24 +97,15 @@ export default function CreateUser() {
       id: user.uid,
       createdAt: timestamp.fromDate(new Date()), //creates new timestamp from date given to fn
     };
-
-    const newUser = {
-      firstName,
-      lastName,
-      email,
-      password,
-      branch,
-      role,
-      createdBy,
-    };
     
-    await createUser(email, password, firstName, lastName, branch, role, createdBy); // so waits here while addDocument completes
+    await createUser(email, password, firstName, lastName, branch, role, createdBy, isActive); // so waits here while addDocument completes
 
     if(!error){
       setFirstName('')
       setLastName('')
       setEmail('')
       setPassword('')
+      
       setRole(null)
       setBranch(null)
     }

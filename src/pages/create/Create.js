@@ -99,13 +99,13 @@ export default function Create() {
     }
 
     // clean up data from user object to get info we need
-    const assignedUsersList = assignedUsers.map((u) => {
-        return {
-            displayName: u.value.displayName,
-            photoURL: u.value.photoURL,
-            id: u.value.id
-        }
-      })
+    // const assignedUsersList = assignedUsers.map((u) => {
+    //     return {
+    //         displayName: u.value.displayName,
+    //         photoURL: u.value.photoURL,
+    //         id: u.value.id
+    //     }
+    //   })
 
     // create doc and save to firestore here
     const project = {
@@ -115,7 +115,7 @@ export default function Create() {
       dueDate: timestamp.fromDate(new Date(dueDate)), //creates new timestamp from date given to fn
       comments: [],
       createdBy: createdBy,
-      assignedUsersList: assignedUsersList
+      
     };
     
     await addDocument(project) // so waits here while addDocument completes
@@ -163,14 +163,14 @@ export default function Create() {
             options={categories}
           />
         </label>
-        <label>
+        {/* <label>
           <span>Assign to:</span>
           <Select
             onChange={(option) => setAssignedUsers(option)}
             options={users}
             isMulti
           />
-        </label>
+        </label> */}
         <button className="btn">Add Project</button>
         {formError && <p className='error'>{formError}</p>}
       </form>

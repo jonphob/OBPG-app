@@ -1,0 +1,9 @@
+.rx-figures-table table {
+    width:100%;
+    text-align:center;
+    margin-top:20px;
+}
+
+.rxFigures-th {
+    font-size: 0.9rem;
+}

@@ -3,6 +3,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import RxFigureInput from '../../components/RxFigureInput';
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useFirestore } from '../../hooks/useFirestore';
+import { Navigate, useNavigate } from 'react-router';
+import { timestamp } from "../../firebase/config";
 
 // styles
 import './AddRxFigure.css'
@@ -13,6 +15,7 @@ export default function AddRxFigures() {
   const { addDocument, response } = useFirestore('rxFigures')//need to specify a collection to store
   const [date, setDate] = useState("");
   const { user } = useAuthContext();
+  const navigate = useNavigate()
   
   const [paperExForms, setPaperExForms] = useState("");
   const [paperExItems, setPaperExItems] = useState("");
@@ -54,7 +57,10 @@ export default function AddRxFigures() {
   // create an object for user who has created project using info from auth context
   
   const handleSubmit = async (e) => {
+
     e.preventDefault(e);
+    
+    
     const addedBy = {
       displayName: user.displayName,
       id: user.uid,
@@ -62,7 +68,7 @@ export default function AddRxFigures() {
     
     const dailyFigures = {
       addedBy,
-      dateForFigures: date,
+      dateForFigures: timestamp.fromDate(new Date(date)),
       figures: {
         paidForms: {
           paperPdForms,
@@ -85,7 +91,7 @@ export default function AddRxFigures() {
           mdaExItems,
         },
       },
-    };
+   };
 
     
     await addDocument(dailyFigures)
@@ -111,6 +117,12 @@ export default function AddRxFigures() {
       toast.error('There was an error, please try again')
     }
   };
+
+  const handleViewBtnClick = (e) => {
+    e.preventDefault()
+    navigate('/viewrxfigures')
+
+  }
   
 
   return (
@@ -162,10 +174,6 @@ export default function AddRxFigures() {
                 background: "#FF6B47",
                 color: "#fff",
               },
-              // theme: {
-              //   primary: "red",
-              //   secondary: "white",
-              // },
             },
           }}
         />
@@ -273,7 +281,9 @@ export default function AddRxFigures() {
           </div>
           <div className="btn-container">
             <button className="btn submit-figures-btn">Submit Figures</button>
-            <button className="btn submit-figures-btn">View figures</button>
+            <button 
+              className="btn submit-figures-btn"
+              onClick={handleViewBtnClick}>View figures</button>
           </div>
         </form>
       </div>

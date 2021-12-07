@@ -9,15 +9,18 @@ import Create from './pages/create/Create';
 import Login from './pages/login/Login';
 import CreateUser from './pages/CreateUser/CreateUser'
 import Project from './pages/project/Project';
+// import Admin from './pages/Admin/Admin'
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import OnlineUsers from './components/OnlineUsers';
 import AddRxFigures from './pages/addRxFigures/AddRxFigures';
 import AddServiceFigures from './pages/addServiceFigures/AddServiceFigures';
+import ViewRxFigures from './pages/viewRxFigures/ViewRxFigures';
 
 function App() {
 
 const { user, authIsReady } = useAuthContext()
+
   return (
     <div className="App">
       {authIsReady && (
@@ -45,7 +48,9 @@ const { user, authIsReady } = useAuthContext()
 
               <Route
                 path="/createuser"
-                element={(user && <CreateUser />) || (user && <Navigate to="/" />)}
+                element={
+                  (user && <CreateUser />) || (!user && <Navigate to="/" />)
+                }
               ></Route>
               <Route
                 path="/project/:id"
@@ -64,6 +69,13 @@ const { user, authIsReady } = useAuthContext()
                 path="/addServiceFigures"
                 element={
                   (user && <AddServiceFigures />) ||
+                  (!user && <Navigate to="/login" />)
+                }
+              ></Route>
+              <Route
+                path="/viewrxfigures"
+                element={
+                  (user && <ViewRxFigures/>) ||
                   (!user && <Navigate to="/login" />)
                 }
               ></Route>

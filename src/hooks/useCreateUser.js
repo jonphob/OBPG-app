@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { projectAuth, projectFirestore } from "../firebase/config";
-import { useAuthContext } from './useAuthContext'
+// import { useAuthContext } from './useAuthContext'
 
 export const useCreateUser = () => {
   const [isCancelled, setIsCancelled] = useState(false)
   const [error, setError] = useState(null)
   const [isPending, setIsPending] = useState(false)
-  const { dispatch } = useAuthContext()
+  // const { dispatch } = useAuthContext()
 
   const createUser = async (
     email,
@@ -15,7 +15,8 @@ export const useCreateUser = () => {
     lastName,
     branch,
     role,
-    createdBy
+    createdBy,
+    isActive
   ) => {
     setError(null);
     setIsPending(true);
@@ -45,6 +46,7 @@ export const useCreateUser = () => {
         branch,
         role,
         createdBy,
+        isActive
       });
 
       // dispatch login action to update global auth context so will have access to this user
