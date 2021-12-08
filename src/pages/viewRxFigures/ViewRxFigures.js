@@ -16,7 +16,6 @@ export default function ViewRxFigures() {
     
      const { documents, error, isPending } = useCollection(
        "rxFigures",
-       `'"dateForFigures", "=" , "${start}"'`,
        "dateForFigures"
      );
     

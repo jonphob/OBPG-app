@@ -4,7 +4,7 @@
 import { useEffect, useState, useRef } from "react"
 import { projectFirestore } from "../firebase/config"
 
-export const useCollection = (collection, _query1, _orderBy) => {
+export const useCollection = (collection, _orderBy=null, _query1=null) => {
   const [documents, setDocuments] = useState(null);
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
@@ -20,8 +20,7 @@ export const useCollection = (collection, _query1, _orderBy) => {
   useEffect(() => {
     setIsPending(true);
     let ref = projectFirestore.collection(collection);
-    
-    
+
     if (query1) {
       ref = ref.where(...query1);
     }
@@ -32,8 +31,6 @@ export const useCollection = (collection, _query1, _orderBy) => {
     if (orderBy) {
       ref = ref.orderBy(orderBy); // changed from ...orderby
     }
-  
-
 
     const unsubscribe = ref.onSnapshot(
       (snapshot) => {
