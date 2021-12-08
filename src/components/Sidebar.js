@@ -5,6 +5,7 @@ import { useGreeting } from "../hooks/useGreeting";
 
 // styles & icons
 import "./Sidebar.css";
+import ViewFigIcon from '../assets/viewFigs.svg'
 import AddIcon from "../assets/add_icon.svg";
 import DashboardIcon from "../assets/dashboard_icon.svg";
 import Avatar from "./Avatar";
@@ -43,6 +44,12 @@ export default function Sidebar() {
                 <NavLink to="/addRxFigures">
                   <img src={AddIcon} alt="add project icon" />
                   <span>Add Rx Figures</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/viewRxFigures">
+                  <img src={ViewFigIcon} alt="view figures icon" />
+                  <span>View Rx Figures</span>
                 </NavLink>
               </li>
               <li>

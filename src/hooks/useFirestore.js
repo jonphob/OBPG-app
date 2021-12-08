@@ -29,7 +29,7 @@ export const useFirestore = (collection) => {
   const [response, dispatch] = useReducer(firestoreReducer, initialState)
   const [isCancelled, setIsCancelled] = useState(false)
 
-  // collection ref
+  // collection reference
   const ref = projectFirestore.collection(collection)
 
   // only dispatch is not cancelled

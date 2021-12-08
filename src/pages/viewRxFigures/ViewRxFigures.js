@@ -1,25 +1,42 @@
 import { useCollection } from "../../hooks/useCollection"
-
+import { timestamp } from "../../firebase/config"
 import { format } from 'date-fns'
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
+import { css } from "@emotion/react"
+import ClockLoader from "react-spinners/ClockLoader"
 
+// Styles
 import './ViewRxFigures.css'
 
 
 export default function ViewRxFigures() {
+    const start = new Date('2021-11-01')
     
-     const { documents, error } = useCollection('rxFigures', 'dateForFigures')
+    console.log(start)
+    
+     const { documents, error, isPending } = useCollection(
+       "rxFigures",
+       `'"dateForFigures", "=" , "${start}"'`,
+       "dateForFigures"
+     );
     
     
     return (
       <div className="rx-figures-table">
         <h2>Rx Figures</h2>
+        {isPending && (
+          <ClockLoader
+            color='green'
+            loading={isPending}
+            
+            size={50}
+          />
+        )}
         {documents && (
           <table>
             <thead>
-              <tr className='rxFigures-th'>
-                <th>Date</th>
+              <tr className="rxFigures-th">
+                <th className='th-date'>Date</th>
                 <th>Ex EPS Forms</th>
                 <th>Ex EPS Items</th>
                 <th>Ex FP10 Forms</th>

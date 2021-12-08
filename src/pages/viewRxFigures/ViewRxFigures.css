@@ -7,3 +7,17 @@
 .rxFigures-th {
     font-size: 0.9rem;
 }
+
+.th-date {
+    width:10%;
+}
+
+th {
+    padding-bottom: 20px;
+}
+
+
+td {
+    font-size: 0.9em;
+    padding-bottom: 10px;
+}

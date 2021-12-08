@@ -12,7 +12,8 @@ import './AddRxFigure.css'
 
 export default function AddRxFigures() {
 
-  const { addDocument, response } = useFirestore('rxFigures')//need to specify a collection to store
+  const { addDocument, response } = useFirestore('rxFigures')
+  
   const [date, setDate] = useState("");
   const { user } = useAuthContext();
   const navigate = useNavigate()
@@ -93,8 +94,8 @@ export default function AddRxFigures() {
       },
    };
 
+  await addDocument(dailyFigures)
     
-    await addDocument(dailyFigures)
     
     if(!response.error) {
       toast.success("Rx Figures Added");
