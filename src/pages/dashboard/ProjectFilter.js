@@ -10,13 +10,13 @@ export default function ProjectFilter({ currentFilter, changeFilter }) {
       <div className="project-filter">
         <nav>
           <p>Filter by: </p>
-          {filterList.map((f) => (
+          {filterList.map((filter) => (
             <button
-              className={currentFilter === f ? "active" : ""}
-              key={f}
-              onClick={() => handleClick(f)}
+              className={currentFilter === filter ? "active" : ""}
+              key={filter}
+              onClick={() => handleClick(filter)}
             >
-              {f}
+              {filter}
             </button>
           ))}
         </nav>

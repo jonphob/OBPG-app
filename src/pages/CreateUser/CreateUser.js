@@ -67,7 +67,6 @@ export default function CreateUser() {
 
   // create user values for role select box
   useEffect(() => {
-    console.log(documents)
     if (documents) {
       setRoleList(
         documents.map((role) => {
@@ -105,9 +104,9 @@ export default function CreateUser() {
       setLastName('')
       setEmail('')
       setPassword('')
-      
       setRole(null)
       setBranch(null)
+      setIsActive(false)
     }
   };;
 
