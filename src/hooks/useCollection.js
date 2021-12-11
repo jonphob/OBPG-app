@@ -14,7 +14,6 @@ export const useCollection = (collection, _orderBy, _query1, _query2) => {
   const query1 = useRef(_query1).current;
   const query2 = useRef(_query2).current;
   
-
   useEffect(() => {
     setIsPending(true);
     

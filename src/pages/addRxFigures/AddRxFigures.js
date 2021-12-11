@@ -3,7 +3,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import RxFigureInput from '../../components/RxFigureInput';
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useFirestore } from '../../hooks/useFirestore';
-import { Navigate, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { timestamp } from "../../firebase/config";
 
 // styles

@@ -16,11 +16,29 @@ th {
     padding-bottom: 20px;
 }
 
-
 td {
     font-size: 0.9em;
     padding-bottom: 10px;
 }
 .start-date{
     width:200px;
+}
+
+.month-filter {
+    margin-right: 2px;
+}
+
+.active {
+    background-color: var(--highlight-color);
+    color: #fff;
+}
+
+.no-data-msg {
+    position: relative;
+    top: 100px;
+    left: 43%;
+}
+
+.monthFilter {
+    margin: 20px 0;
 }
