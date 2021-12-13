@@ -1,23 +1,56 @@
-import { useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
+import ToastModal from '../../components/Toast';
 import RxFigureInput from '../../components/RxFigureInput';
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useFirestore } from '../../hooks/useFirestore';
 import { useNavigate } from 'react-router';
 import { timestamp } from "../../firebase/config";
+import { useCollection} from '../../hooks/useCollection'
+import Select from "react-select";
 
 // styles
 import './AddRxFigure.css'
+// select box styles
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? "white" : "#inherit",
+    backgroundColor: state.isSelected ? "#4CAA3C" : "white",
+    ":hover": {
+      backgroundColor: "#4caa3c2b",
+      color: "inherit",
+    },
+  }),
+  valueContainer: (provided, state) => ({
+    ...provided,
+    ":focusVisible": {
+      outline: "#4caa3c 3px solid",
+    },
+    padding: "0px 8px",
+  }),
+  control: (provided, state) => ({
+    ...provided,
+    width: '300px',
+
+    ":hover": {
+      borderColor: "#4CAA3C",
+    },
+  }),
+};
 
 
 export default function AddRxFigures() {
+  const { addDocument, response } = useFirestore("rxFigures");
+  const { documents } = useCollection("branches", "name");
 
-  const { addDocument, response } = useFirestore('rxFigures')
-  
   const [date, setDate] = useState("");
   const { user } = useAuthContext();
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+
+  const [branch, setBranch] = useState("")
+  const [branchList, setBranchList] = useState([])
+
   const [paperExForms, setPaperExForms] = useState("");
   const [paperExItems, setPaperExItems] = useState("");
   const [paperPdForms, setPaperPdForms] = useState("");
@@ -46,29 +79,28 @@ export default function AddRxFigures() {
   const mdsPdFormsChange = (e) => setMdaPdForms(parseInt(e.target.value));
   const mdsPdItemsChange = (e) => setMdaPdItems(parseInt(e.target.value));
 
-//   // Handle Toast button
-//   const handleClick = (e) => {
-//     if(e === 'success'){
-//     toast.success("Rx Figures Submitted Succesfully")
-//   } else if(e === 'error') {
-//     toast.error('There was a problem submitting figures, please try again')
-//   }
-// }
+  //   // Handle Toast button
+  //   const handleClick = (e) => {
+  //     if(e === 'success'){
+  //     toast.success("Rx Figures Submitted Succesfully")
+  //   } else if(e === 'error') {
+  //     toast.error('There was a problem submitting figures, please try again')
+  //   }
+  // }
 
   // create an object for user who has created project using info from auth context
-  
-  const handleSubmit = async (e) => {
 
+  const handleSubmit = async (e) => {
     e.preventDefault(e);
-    
-    
+
     const addedBy = {
       displayName: user.displayName,
       id: user.uid,
     };
-    
+
     const dailyFigures = {
       addedBy,
+      branch,
       dateForFigures: timestamp.fromDate(new Date(date)),
       figures: {
         paidForms: {
@@ -92,15 +124,14 @@ export default function AddRxFigures() {
           mdaExItems,
         },
       },
-   };
+    };
 
-  await addDocument(dailyFigures)
-    
-    
-    if(!response.error) {
+    await addDocument(dailyFigures);
+
+    if (!response.error) {
       toast.success("Rx Figures Added");
       //set all input states to empty strings
-     
+      setBranch("")
       setDate("");
       setPaperExForms("");
       setPaperExItems("");
@@ -115,79 +146,54 @@ export default function AddRxFigures() {
       setMdaPdForms("");
       setMdaPdItems("");
     } else {
-      toast.error('There was an error, please try again')
+      toast.error("There was an error, please try again");
     }
   };
 
   const handleViewBtnClick = (e) => {
-    e.preventDefault()
-    navigate('/viewrxfigures')
+    e.preventDefault();
+    navigate("/viewrxfigures");
+  };
 
-  }
-  
+  // set branch dropdown
+  useEffect(() => {
+    if (documents) {
+      setBranchList(
+        documents.map((branch) => {
+          return { value: branch.name, label: branch.name };
+        })
+      )
+    }
+  }, [documents])
+
+   
 
   return (
     <>
-      <div>
-        <Toaster
-          position="bottom-center"
-          reverseOrder={false}
-          gutter={8}
-          containerClassName=""
-          containerStyle={{
-            position: "absolute",
-            bottom: "100px",
-          }}
-          toastOptions={{
-            // Define default options
-            className: "",
-            duration: 5000,
-            style: {
-              background: "#fff",
-              color: "black",
-
-              height: "50px",
-              borderRadius: "10px",
-            },
-            // Default options for specific types
-            success: {
-              iconTheme: {
-                primary: "white",
-                secondary: "#4CAA3C",
-              },
-              duration: 5000,
-              style: {
-                background: "#4CAA3C",
-                color: "#fff",
-              },
-              theme: {
-                primary: "",
-                secondary: "white",
-              },
-            },
-            error: {
-              iconTheme: {
-                primary: "white",
-                secondary: "#FF6B47",
-              },
-              duration: 5000,
-              style: {
-                background: "#FF6B47",
-                color: "#fff",
-              },
-            },
-          }}
-        />
-      </div>
+      <ToastModal/>
       <h2>Add Prescription Figures</h2>
       <div className="add-figures-form">
         <form onSubmit={handleSubmit}>
+          <div className="branch-div">
+            <label className="date-label">
+              <span>
+                Please select a branch for the figures you are entering:
+              </span>
+            </label>
+            <Select
+              required
+              styles={customStyles}
+              options={branchList}
+              onChange={(option) => setBranch(option.value)}
+            />
+          </div>
           <div className="date-div">
             <label htmlFor="dateInput" className="date-label">
               <span>
                 Please select a date for the figures you are entering:
               </span>
             </label>
+
             <input
               id="dateInput"
               required
@@ -282,9 +288,12 @@ export default function AddRxFigures() {
           </div>
           <div className="btn-container">
             <button className="btn submit-figures-btn">Submit Figures</button>
-            <button 
+            <button
               className="btn submit-figures-btn"
-              onClick={handleViewBtnClick}>View figures</button>
+              onClick={handleViewBtnClick}
+            >
+              View figures
+            </button>
           </div>
         </form>
       </div>

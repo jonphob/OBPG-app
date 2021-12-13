@@ -54,6 +54,7 @@ label span {
   margin-bottom: 6px;
 }
 input, textarea {
+  font-family: Poppins;
   padding: 8px 6px;
   font-size: 1em;
   color: #777;

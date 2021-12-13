@@ -16,14 +16,14 @@ export const useLogin = () => {
   
     try {
       // login
-      const res = await projectAuth.signInWithEmailAndPassword(email, password)
+      const result = await projectAuth.signInWithEmailAndPassword(email, password)
 
       // update online status
       await projectFirestore.collection("users")
-      .doc(res.user.uid).update({online: true});
-
+      .doc(result.user.uid).update({online: true});
+      
       // dispatch login action
-      dispatch({ type: 'LOGIN', payload: res.user })
+      dispatch({ type: 'LOGIN', payload: result.user })
 
       if (!isCancelled) {
         setIsPending(false)

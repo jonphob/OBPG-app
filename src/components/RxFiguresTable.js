@@ -31,7 +31,7 @@ export default function RxFiguresTable({documents, results }) {
         setTable(null)
            setTable(
              <tr>
-               <td colspan='13'className='td-noData'>No Data Available</td>
+               <td colSpan='13'className='td-noData'>No Data Available</td>
              </tr>
            );}
     }, [documents, results]);

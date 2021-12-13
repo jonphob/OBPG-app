@@ -70,7 +70,7 @@ legend {
    
 }
 
-.date-div {
+.date-div, .branch-div {
     display: flex;
     align-items: center;
 }

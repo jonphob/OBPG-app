@@ -162,7 +162,7 @@ export default function CreateUser() {
             <Select
               styles={customStyles}
               options={branches}
-              onChange={(option) => setBranch(option.value)}
+              onChange={(option) => setBranch(option.label)}
             />
           </label>
           <label>

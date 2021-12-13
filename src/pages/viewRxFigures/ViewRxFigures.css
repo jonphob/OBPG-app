@@ -24,9 +24,20 @@ td {
     width:200px;
 }
 
-.month-filter {
+.month-filter .btn {
     margin-right: 2px;
+    transition: 200ms;
 }
+
+.month-filter .btn:hover {
+    background-color:var(--highlight-color);
+    color:#fff;
+}
+
+/* .month-filter .btn:active {
+    background-color:#034844;
+    color:#fff;
+} */
 
 .active {
     background-color: var(--highlight-color);
@@ -39,6 +50,7 @@ td {
     left: 43%;
 }
 
-.monthFilter {
-    margin: 20px 0;
+.nav-div {
+    width:13rem;
+    margin: 35px 0;
 }
