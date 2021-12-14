@@ -9,6 +9,7 @@ import { timestamp } from "../../firebase/config";
 import { useCollection} from '../../hooks/useCollection'
 import Select from "react-select";
 
+
 // styles
 import './AddRxFigure.css'
 // select box styles
@@ -24,10 +25,11 @@ const customStyles = {
   }),
   valueContainer: (provided, state) => ({
     ...provided,
+    padding: "1px 5px 2px 5px",
     ":focusVisible": {
       outline: "#4caa3c 3px solid",
     },
-    padding: "0px 8px",
+    
   }),
   control: (provided, state) => ({
     ...provided,
@@ -166,21 +168,18 @@ export default function AddRxFigures() {
     }
   }, [documents])
 
-   
-
   return (
     <>
-      <ToastModal/>
+      <ToastModal />
       <h2>Add Prescription Figures</h2>
       <div className="add-figures-form">
         <form onSubmit={handleSubmit}>
           <div className="branch-div">
-            <label className="date-label">
-              <span>
-                Please select a branch for the figures you are entering:
-              </span>
+            <label className="branch-label">
+              <span>1. Please select branch:</span>
             </label>
             <Select
+              placeholder={"Select Branch..."}
               required
               styles={customStyles}
               options={branchList}
@@ -189,9 +188,7 @@ export default function AddRxFigures() {
           </div>
           <div className="date-div">
             <label htmlFor="dateInput" className="date-label">
-              <span>
-                Please select a date for the figures you are entering:
-              </span>
+              <span>2. Please select date:</span>
             </label>
 
             <input
@@ -287,6 +284,7 @@ export default function AddRxFigures() {
             </fieldset>
           </div>
           <div className="btn-container">
+            <button className="btn submit-figures-btn">Submit Figures</button>
             <button className="btn submit-figures-btn">Submit Figures</button>
             <button
               className="btn submit-figures-btn"

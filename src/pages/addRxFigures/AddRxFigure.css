@@ -61,13 +61,19 @@ legend {
     margin-left: 3px;
 }
 
-.date-label {
+.date-label, .branch-label {
     padding-top: 8px;
     width: -moz-fit-content;
     width: fit-content;
     margin-left: 10px;
-    margin-right: 15px;
-   
+   }
+
+.date-label {
+    margin-right: 1.7rem;
+}
+
+.branch-label {
+    margin-right: 10px;
 }
 
 .date-div, .branch-div {

@@ -20,7 +20,6 @@ const override = css`
 
 export default function ViewRxFigures() {
   const date = new Date();
-  const year = new Date().getFullYear()
   const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
   const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
   const [documents, setDocuments] = useState(null);
@@ -78,7 +77,9 @@ export default function ViewRxFigures() {
     var lastDay = new Date(year, month + 1, 0);
     setStartDate(firstDay)
     setEndDate(lastDay)
+    console.log(firstDay)
   };
+  
 
   return (
     <div className="rx-figures-table">
